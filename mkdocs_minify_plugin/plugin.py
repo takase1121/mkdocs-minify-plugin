@@ -10,7 +10,6 @@ import logging
 
 import csscompressor
 import minify  # tdewolff-minify
-import jsmin
 import mkdocs.config.config_options
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.plugins import BasePlugin
@@ -25,7 +24,7 @@ EXTRAS: Dict[str, str] = {
 }
 
 MINIFIERS: Dict[str, Callable] = {
-    "js": jsmin.jsmin,
+    "js": lambda file_data: minify.string("application/javascript", file_data),
     "css": csscompressor.compress,
 }
 
@@ -149,10 +148,7 @@ class MinifyPlugin(BasePlugin):
     @staticmethod
     def _minify_file_data_with_func(file_data: str, minify_func: Callable) -> str:
         """Use the minify_func and return the minified data"""
-        if minify_func.__name__ == "jsmin":
-            return minify_func(file_data, quote_chars="'\"`")
-        else:
-            return minify_func(file_data)
+        return minify_func(file_data)
 
     def _minify_html_page(self, output: str) -> Optional[str]:
         """Minify HTML page content."""
