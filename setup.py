@@ -20,7 +20,6 @@ setup(
     install_requires=[
         "mkdocs>=1.4.1",
         "tdewolff-minify>=2.20.16",
-        "jsmin>=3.0.1",
         "csscompressor>=0.9.5",
     ],
     classifiers=[
