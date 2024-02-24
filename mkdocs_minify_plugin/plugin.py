@@ -25,7 +25,7 @@ EXTRAS: Dict[str, str] = {
 
 MINIFIERS: Dict[str, Callable] = {
     "js": lambda file_data: minify.string("application/javascript", file_data),
-    "css": csscompressor.compress,
+    "css": lambda file_data: minify.string("text/css", file_data),
 }
 
 if version.parse(csscompressor.__version__) <= version.parse("0.9.5"):
